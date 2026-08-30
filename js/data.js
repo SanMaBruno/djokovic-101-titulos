@@ -1,0 +1,36 @@
+/* Datos: cada torneo lleva nombre corto (etiqueta), nombre completo, categoría y años ganados */
+const S=[
+{n:'Pista dura',k:'hard',c:['#1B4E7C','#2C6EA8','#CFE0F0'],tc:'#EAF3FB',yc:'#0B3355',T:[
+['Australia','Australian Open','Grand Slam',[2008,2011,2012,2013,2015,2016,2019,2020,2021,2023]],
+['París','Paris Masters','Masters 1000',[2009,2013,2014,2015,2019,2021,2023]],
+['ATP Finals','Nitto ATP Finals','Torneo de Maestros',[2008,2012,2013,2014,2015,2022,2023]],
+['Miami','Miami Open','Masters 1000',[2007,2011,2012,2014,2015,2016]],
+['Pekín','China Open','ATP 500',[2009,2010,2012,2013,2014,2015]],
+['Indian Wells','Indian Wells Masters','Masters 1000',[2008,2011,2014,2015,2016]],
+['Dubái','Dubai Tennis Championships','ATP 500',[2009,2010,2011,2013,2020]],
+['US Open','US Open','Grand Slam',[2011,2015,2018,2023]],
+['Shanghái','Shanghai Masters','Masters 1000',[2012,2013,2015,2018]],
+['Canadá','Canadian Open','Masters 1000',[2007,2011,2012,2016]],
+['Cincinnati','Cincinnati Open','Masters 1000',[2018,2020,2023]],
+['Doha','Qatar Open','ATP 250',[2016,2017]],
+['Adelaida','Adelaida','ATP 250',[2007,2023]],
+['Viena','Erste Bank Open','ATP 500',[2007]],
+['Basilea','Swiss Indoors','ATP 500',[2009]],
+['Tokio','Japan Open','ATP 500',[2019]],
+['Astaná','Astana Open','ATP 500',[2022]],
+['Tel Aviv','Tel Aviv Open','ATP 250',[2022]],
+['Metz','Moselle Open','ATP 250',[2006]],
+['Atenas','Hellenic Championship','ATP 250',[2025]]]},
+{n:'Arcilla',k:'clay',c:['#8E4225','#B85C38','#EDCDBB'],tc:'#FBEEE7',yc:'#5C2A14',T:[
+['Roma','Internazionali d\'Italia','Masters 1000',[2008,2011,2014,2015,2020,2022]],
+['R. Garros','Roland Garros','Grand Slam',[2016,2021,2023]],
+['Madrid','Mutua Madrid Open','Masters 1000',[2011,2016,2019]],
+['Belgrado','Serbia Open / Belgrade Open','ATP 250',[2009,2011,2021]],
+['Montecarlo','Monte-Carlo Masters','Masters 1000',[2013,2015]],
+['JJ.OO.','Juegos Olímpicos de París','Oro olímpico',[2024]],
+['Ginebra','Gonet Geneva Open','ATP 250',[2025]],
+['Estoril','Estoril Open','ATP 250',[2007]],
+['Amersfoort','Dutch Open','ATP 250',[2006]]]},
+{n:'Césped',k:'grass',c:['#3C6524','#5B8F3A','#D5E6C0'],tc:'#EFF6E6',yc:'#254016',T:[
+['Wimbledon','Wimbledon','Grand Slam',[2011,2014,2015,2018,2019,2021,2022]],
+['Eastbourne','Eastbourne International','ATP 250',[2017]]]}];
