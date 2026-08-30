@@ -90,13 +90,11 @@ S.forEach((s, si) => {
 
 const iw = 566, ih = iw * 346 / 780;
 document.getElementById('chart').insertAdjacentHTML('afterbegin',
-  `<svg id="svg" viewBox="0 0 780 786" role="img" xmlns="http://www.w3.org/2000/svg">
-<title>Los 101 títulos ATP de Novak Djokovic por superficie, torneo y año</title>
-<desc>Gráfico radial: anillo exterior con el año de cada título, anillo medio con el torneo y anillo interior con la superficie. 72 títulos en pista dura, 21 en arcilla y 8 en césped.</desc>
+  `<svg id="svg" viewBox="0 0 780 786" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
 <defs>${defs}</defs>
 ${rings}
-<circle cx="${cx}" cy="${cy}" r="${HOLE}" fill="#FBFAF7"/>
-<image href="assets/djokovic.png" x="${cx-iw/2}" y="${cy-ih/2}" width="${iw}" height="${ih}" preserveAspectRatio="xMidYMid meet"/>
+<circle cx="${cx}" cy="${cy}" r="${HOLE}" fill="#F8F7F4"/>
+<image href="assets/djokovic.png" x="${cx-iw/2}" y="${cy-ih/2}" width="${iw}" height="${ih}" preserveAspectRatio="xMidYMid meet" pointer-events="none"/>
 ${labels}</svg>`);
 
 /* ── Interacción ── */

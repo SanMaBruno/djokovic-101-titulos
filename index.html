@@ -3,32 +3,56 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Los 101 títulos de Novak Djokovic</title>
+<title>Djokovic · 101 títulos ATP</title>
 <meta name="description" content="Visualización radial interactiva de los 101 títulos ATP de Novak Djokovic por superficie, torneo y año.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="wrap">
 
-  <div class="head">
-    <h1><b>Djokovic</b> · <span>101 títulos ATP · 2006–2025</span></h1>
-    <p class="intro">71% en pista dura · 24 Grand Slams · el tercer hombre de la Era Abierta en llegar a los 100 trofeos</p>
-  </div>
+  <!-- Cabecera -->
+  <header class="head">
+    <div class="title-block">
+      <p class="eyebrow">Novak Djokovic · El GOAT</p>
+      <h1>101 Títulos<em>ATP 2006–2025</em></h1>
+    </div>
+    <p class="meta">
+      <strong>71%</strong> en pista dura · <strong>24</strong> Grand Slams<br>
+      El tercer hombre de la Era Abierta en conquistar 100 trofeos.<br>
+      Superficie · Torneo · Año — todo en un gráfico.
+    </p>
+  </header>
 
-  <div class="legend" id="legend">
-    <button class="chip" data-f="hard"  aria-pressed="false"><i class="sw" style="background:#2C6EA8"></i>Pista dura · 72</button>
-    <button class="chip" data-f="clay"  aria-pressed="false"><i class="sw" style="background:#B85C38"></i>Arcilla · 21</button>
-    <button class="chip" data-f="grass" aria-pressed="false"><i class="sw" style="background:#5B8F3A"></i>Césped · 8</button>
-    <button class="chip" data-f="gs"    aria-pressed="false"><i class="sw" style="background:#C9A227;border-radius:50%"></i>Grand Slams · 24</button>
+  <!-- Filtros -->
+  <div class="filters-row">
+    <span class="filter-label">Filtrar</span>
+    <div id="legend">
+      <button class="chip" data-f="hard"  aria-pressed="false"><i class="dot" style="background:#2C6EA8"></i>Pista dura · 72</button>
+      <button class="chip" data-f="clay"  aria-pressed="false"><i class="dot" style="background:#B85C38"></i>Arcilla · 21</button>
+      <button class="chip" data-f="grass" aria-pressed="false"><i class="dot" style="background:#4E8030"></i>Césped · 8</button>
+      <button class="chip" data-f="gs"    aria-pressed="false"><i class="dot" style="background:#B8921A"></i>Grand Slams · 24</button>
+    </div>
   </div>
-  <p class="hint">Pasa el cursor por cualquier sección para iluminarla · haz clic en un filtro para aislarlo</p>
+  <p class="hint">Pasa el cursor sobre cualquier sección para iluminarla · clic en un filtro para aislarlo</p>
 
+  <!-- Gráfico -->
   <div id="chart"><div id="tip"></div></div>
 
-  <div class="foot">
-    <span><b>Bruno San Martín Navarro</b> — Científico de datos &amp; ingeniero en informática · <a href="https://www.linkedin.com/in/sanmabruno/" target="_blank" rel="noopener">linkedin.com/in/sanmabruno</a></span>
-    <span>Fuente: <a href="https://www.atptour.com/en/players/novak-djokovic/d643/titles-and-finals" target="_blank" rel="noopener">ATP Tour</a> · títulos individuales, incluye oro olímpico París 2024 · primer título: Amersfoort · último: Atenas</span>
-  </div>
+  <!-- Pie -->
+  <footer class="foot">
+    <span>
+      <span class="foot-author">Bruno San Martín Navarro</span>
+      &nbsp;·&nbsp; Científico de datos &amp; ingeniero en informática
+      &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/sanmabruno/" target="_blank" rel="noopener">linkedin.com/in/sanmabruno</a>
+    </span>
+    <span class="foot-source">
+      Fuente: <a href="https://www.atptour.com/en/players/novak-djokovic/d643/titles-and-finals" target="_blank" rel="noopener">ATP Tour</a>
+      · Incluye oro olímpico París 2024 · Primer título: Amersfoort · Último: Atenas
+    </span>
+  </footer>
 
 </div>
 <script src="js/data.js"></script>
