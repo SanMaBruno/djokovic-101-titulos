@@ -13,35 +13,40 @@
 <body>
 <div class="wrap">
 
-  <!-- Cabecera -->
+  <!-- Header -->
   <header class="head">
-    <div class="title-block">
-      <p class="eyebrow">Novak Djokovic · El GOAT</p>
-      <h1>101 Títulos<em>ATP 2006–2025</em></h1>
+    <p class="eyebrow">Novak Djokovic</p>
+    <div class="title-line">
+      <h1>101 Títulos</h1>
+      <span class="sub">ATP &nbsp;2006 – 2025</span>
     </div>
-    <p class="meta">
-      <strong>71%</strong> en pista dura · <strong>24</strong> Grand Slams<br>
-      El tercer hombre de la Era Abierta en conquistar 100 trofeos.<br>
-      Superficie · Torneo · Año — todo en un gráfico.
-    </p>
+    <p class="tagline">Mayor ganador de Grand Slams de la historia</p>
   </header>
 
-  <!-- Filtros -->
-  <div class="filters-row">
-    <span class="filter-label">Filtrar</span>
-    <div id="legend">
+  <!-- Filtros en dos filas -->
+  <div id="filters" class="filters-block">
+    <div class="filter-row">
+      <span class="filter-label">Superficie</span>
       <button class="chip" data-f="hard"  aria-pressed="false"><i class="dot" style="background:#2C6EA8"></i>Pista dura · 72</button>
       <button class="chip" data-f="clay"  aria-pressed="false"><i class="dot" style="background:#B85C38"></i>Arcilla · 21</button>
       <button class="chip" data-f="grass" aria-pressed="false"><i class="dot" style="background:#4E8030"></i>Césped · 8</button>
-      <button class="chip" data-f="gs"    aria-pressed="false"><i class="dot" style="background:#B8921A"></i>Grand Slams · 24</button>
     </div>
+    <div class="filter-row">
+      <span class="filter-label">Categoría</span>
+      <button class="chip chip-olympic" data-f="olympic" aria-pressed="false"><i class="dot" style="background:#C0392B"></i>Oro Olímpico · 1</button>
+      <button class="chip chip-gs"     data-f="gs"      aria-pressed="false"><i class="dot" style="background:#B8921A"></i>Grand Slams · 24</button>
+      <button class="chip chip-m1000"  data-f="m1000"   aria-pressed="false"><i class="dot" style="background:#6B6960"></i>Masters 1000 · 40</button>
+      <button class="chip chip-finals" data-f="finals"  aria-pressed="false"><i class="dot" style="background:#444"></i>ATP Finals · 7</button>
+      <button class="chip chip-atp500" data-f="atp500"  aria-pressed="false"><i class="dot" style="background:#8B8B8B"></i>ATP 500 · 15</button>
+      <button class="chip chip-atp250" data-f="atp250"  aria-pressed="false"><i class="dot" style="background:#AEAB9F"></i>ATP 250 · 14</button>
+    </div>
+    <p class="hint">Pasa el cursor sobre cualquier sección · clic en un filtro para aislarlo</p>
   </div>
-  <p class="hint">Pasa el cursor sobre cualquier sección para iluminarla · clic en un filtro para aislarlo</p>
 
   <!-- Gráfico -->
   <div id="chart"><div id="tip"></div></div>
 
-  <!-- Pie -->
+  <!-- Footer -->
   <footer class="foot">
     <span>
       <span class="foot-author">Bruno San Martín Navarro</span>
@@ -50,7 +55,8 @@
     </span>
     <span class="foot-source">
       Fuente: <a href="https://www.atptour.com/en/players/novak-djokovic/d643/titles-and-finals" target="_blank" rel="noopener">ATP Tour</a>
-      · Incluye oro olímpico París 2024 · Primer título: Amersfoort · Último: Atenas
+      &nbsp;·&nbsp; Incluye oro olímpico París 2024
+      &nbsp;·&nbsp; Primer título: Amersfoort &nbsp;·&nbsp; Último: Atenas
     </span>
   </footer>
 

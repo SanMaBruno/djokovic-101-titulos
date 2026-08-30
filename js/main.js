@@ -4,7 +4,15 @@ const rS0 = 192, rS1 = 232;
 const rT0 = 235, rT1 = 300;
 const rY0 = 303, rY1 = 372;
 
-const GRAND_SLAMS = new Set(['Grand Slam']);
+/* Mapa categoría → clave corta para data-cat */
+const CAT_KEY = {
+  'Grand Slam':       'gs',
+  'Masters 1000':     'm1000',
+  'Torneo de Maestros':'finals',
+  'ATP 500':          'atp500',
+  'ATP 250':          'atp250',
+  'Oro olímpico':     'olympic',
+};
 
 let N = 0;
 S.forEach(s => s.T.forEach(t => N += t[3].length));
@@ -71,19 +79,20 @@ S.forEach((s, si) => {
 
   s.T.forEach(t => {
     const tp = t[3].length * step, t0 = cur;
-    const isGS = GRAND_SLAMS.has(t[2]);
-    META[ti] = { full: t[1], cat: t[2], n: t[3].length, surf: s.n, k: s.k, gs: isGS };
+    const catKey = CAT_KEY[t[2]] || 'other';
+    const isGS   = catKey === 'gs';
+    META[ti] = { full: t[1], cat: t[2], catKey, n: t[3].length, years: t[3], surf: s.n, k: s.k, gs: isGS };
 
-    const gsAttr = isGS ? ' data-gs="1"' : '';
-    rings += arc(rT0, rT1, t0, t0 + tp, `url(#tex-${s.k}-m)`, `data-t="${ti}" data-s="${si}"${gsAttr}`);
+    const catAttr = ` data-cat="${catKey}"${isGS ? ' data-gs="1"' : ''}`;
+    rings += arc(rT0, rT1, t0, t0 + tp, `url(#tex-${s.k}-m)`, `data-t="${ti}" data-s="${si}"${catAttr}`);
 
     t[3].slice().sort((a, b) => a - b).forEach(y => {
-      rings  += arc(rY0, rY1, cur, cur + step, s.c[2], `data-t="${ti}" data-s="${si}" data-y="${y}"${gsAttr}`);
-      labels += radial((rY0+rY1)/2, cur+step/2, y, 11.5, s.yc, 500, rY1-rY0-16, `data-t="${ti}" data-s="${si}"${gsAttr}`, 'rgba(251,250,247,.92)');
+      rings  += arc(rY0, rY1, cur, cur + step, s.c[2], `data-t="${ti}" data-s="${si}" data-y="${y}"${catAttr}`);
+      labels += radial((rY0+rY1)/2, cur+step/2, y, 11.5, s.yc, 500, rY1-rY0-16, `data-t="${ti}" data-s="${si}"${catAttr}`, 'rgba(251,250,247,.92)');
       cur += step;
     });
 
-    labels += radial((rT0+rT1)/2, t0+tp/2, t[0], 11.5, s.tc, 500, rT1-rT0-12, `data-t="${ti}" data-s="${si}"${gsAttr}`, 'rgba(20,14,10,.45)');
+    labels += radial((rT0+rT1)/2, t0+tp/2, t[0], 11.5, s.tc, 500, rT1-rT0-12, `data-t="${ti}" data-s="${si}"${catAttr}`, 'rgba(20,14,10,.45)');
     ti++;
   });
 });
@@ -93,7 +102,7 @@ document.getElementById('chart').insertAdjacentHTML('afterbegin',
   `<svg id="svg" viewBox="0 0 780 786" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
 <defs>${defs}</defs>
 ${rings}
-<circle cx="${cx}" cy="${cy}" r="${HOLE}" fill="#F8F7F4"/>
+<circle cx="${cx}" cy="${cy}" r="${HOLE}" fill="#F2F0EB"/>
 <image href="assets/djokovic.png" x="${cx-iw/2}" y="${cy-ih/2}" width="${iw}" height="${ih}" preserveAspectRatio="xMidYMid meet" pointer-events="none"/>
 ${labels}</svg>`);
 
@@ -103,8 +112,8 @@ const tip   = document.getElementById('tip');
 const chart = document.getElementById('chart');
 const all   = [...svg.querySelectorAll('[data-t],[data-s]')];
 
-/* locked puede ser: null | { type:'surf', idx:string } | { type:'gs' } */
-let locked = null;
+let locked    = null; /* filtro permanente (click) */
+let previewing = null; /* filtro temporal (hover chip) */
 
 const LIT_CLASS = { hard: 'lit-hard', clay: 'lit-clay', grass: 'lit-grass' };
 
@@ -115,31 +124,30 @@ function getLitClass(el) {
 }
 
 function paint(sel) {
+  const active = locked || previewing; /* locked tiene prioridad */
   all.forEach(el => {
     let on = true;
-
-    /* Filtro activo */
-    if (locked) {
-      if (locked.type === 'surf')  on = el.dataset.s === locked.idx;
-      else if (locked.type === 'gs') on = el.dataset.gs === '1';
+    if (active) {
+      if (active.type === 'surf') on = el.dataset.s === active.idx;
+      else if (active.type === 'cat') on = el.dataset.cat === active.catKey;
     }
-
-    /* Hover adicional */
     if (on && sel) {
       if (sel.t !== undefined) on = el.dataset.t === sel.t;
       else if (sel.s !== undefined) on = el.dataset.s === sel.s;
-      else if (sel.gs) on = el.dataset.gs === '1';
     }
-
-    /* Limpiar clases de luz */
     el.classList.remove('dim', 'lit-hard', 'lit-clay', 'lit-grass', 'lit-gs');
-
-    if (!on) {
-      el.classList.add('dim');
-    } else if (sel) {
-      el.classList.add(getLitClass(el));
-    }
+    if (!on) el.classList.add('dim');
+    else if (sel || previewing) el.classList.add(getLitClass(el));
   });
+}
+
+function chipToFilter(f) {
+  const surfKeys = { hard: true, clay: true, grass: true };
+  if (surfKeys[f]) {
+    const idx = String(S.findIndex(s => s.k === f));
+    return { type: 'surf', idx };
+  }
+  return { type: 'cat', catKey: f };
 }
 
 function show(html, e) {
@@ -150,15 +158,30 @@ function show(html, e) {
   tip.style.top  = (e.clientY - r.top - 8) + 'px';
 }
 
+function buildTip(m, y) {
+  const isOlympic    = m.catKey === 'olympic';
+  const isFirstTitle = m.catKey === 'atp250' && m.n === 1 && m.full === 'Dutch Open';
+  const badge = m.gs        ? '<span class="gs-badge">GRAND SLAM</span>'
+              : isOlympic   ? '<span class="olympic-badge">ORO OLÍMPICO</span>'
+              : isFirstTitle ? '<span class="first-badge">PRIMER TÍTULO</span>'
+              : '';
+  /* Si ganó solo una vez, mostrar año aunque sea hover sobre el arco del torneo */
+  const displayYear = m.n === 1
+    ? (y || m.years?.[0] || '')
+    : y;
+  const catLine = (m.gs || isOlympic || isFirstTitle) ? '' : m.cat + ' · ';
+  return `<b>${m.full}${badge}</b>${displayYear ? displayYear + ' · ' : ''}${catLine}${m.surf}<br><i>${m.n} ${m.n === 1 ? 'título' : 'títulos'}</i>`;
+}
+
 svg.addEventListener('mousemove', e => {
   const el = e.target.closest('[data-t],[data-s]');
   if (!el) { tip.style.opacity = 0; paint(null); return; }
 
   if (el.dataset.t !== undefined) {
     const m = META[el.dataset.t];
-    const y = el.dataset.y;
-    const gsBadge = m.gs ? '<span class="gs-badge">GRAND SLAM</span>' : '';
-    show(`<b>${m.full}${gsBadge}</b>${y ? y + ' · ' : ''}${m.cat}<br><i>${m.surf} · ${m.n} ${m.n === 1 ? 'título' : 'títulos'}</i>`, e);
+    /* Si solo ganó 1 vez, el año del arco exterior = el único año */
+    const y = m.n === 1 ? (el.dataset.y || '') : (el.dataset.y || '');
+    show(buildTip(m, y), e);
     paint({ t: el.dataset.t });
   } else {
     const s = S[el.dataset.s];
@@ -173,26 +196,34 @@ svg.addEventListener('mouseleave', () => {
   paint(null);
 });
 
-/* ── Chips de leyenda ── */
-document.getElementById('legend').addEventListener('click', e => {
+/* ── Preview de chip al hover (sin bloquear) ── */
+document.getElementById('filters').addEventListener('mouseover', e => {
+  const b = e.target.closest('.chip');
+  if (!b || locked) return; /* si hay filtro activo, no preview */
+  previewing = chipToFilter(b.dataset.f);
+  paint(null);
+});
+document.getElementById('filters').addEventListener('mouseout', e => {
+  if (e.target.closest('.chip') && !e.relatedTarget?.closest('.chip')) {
+    previewing = null;
+    paint(null);
+  }
+});
+
+/* ── Chips de filtro ── */
+document.getElementById('filters').addEventListener('click', e => {
   const b = e.target.closest('.chip');
   if (!b) return;
 
   const f = b.dataset.f;
-  const allChips = document.querySelectorAll('.chip');
+  const newFilter = chipToFilter(f);
+  const isActive  = locked && JSON.stringify(locked) === JSON.stringify(newFilter);
 
-  if (f === 'gs') {
-    /* Toggle Grand Slam */
-    const active = locked?.type === 'gs';
-    locked = active ? null : { type: 'gs' };
-    allChips.forEach(c => c.setAttribute('aria-pressed', String(!active && c === b)));
-  } else {
-    /* Toggle superficie */
-    const idx = String(S.findIndex(s => s.k === f));
-    const active = locked?.type === 'surf' && locked.idx === idx;
-    locked = active ? null : { type: 'surf', idx };
-    allChips.forEach(c => c.setAttribute('aria-pressed', String(!active && c === b)));
-  }
+  previewing = null;
+  locked = isActive ? null : newFilter;
 
+  document.querySelectorAll('.chip').forEach(c =>
+    c.setAttribute('aria-pressed', String(!isActive && c === b))
+  );
   paint(null);
 });
