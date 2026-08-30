@@ -67,7 +67,7 @@ S.forEach((s, si) => {
 
   rings += arc(rS0, rS1, s0, s0 + sp, `url(#tex-${s.k}-d)`, `data-s="${si}"`);
   defs  += bandPath('sp' + si, flip ? rS0 + 15 : rS1 - 16, s0 + 1.5, s0 + sp - 1.5, flip);
-  labels += `<text data-s="${si}" font-size="13" font-weight="600" letter-spacing="1.6" fill="${s.tc}" stroke="rgba(20,14,10,.45)" stroke-width="2.4" paint-order="stroke" stroke-linejoin="round" dominant-baseline="middle"><textPath href="#sp${si}" startOffset="50%" text-anchor="middle">${s.n.toUpperCase()}</textPath></text>`;
+  labels += `<text data-s="${si}" font-size="13" font-weight="600" letter-spacing="1.6" fill="${s.tc}" stroke="rgba(20,14,10,.45)" stroke-width="2.4" paint-order="stroke" stroke-linejoin="round" dominant-baseline="middle" class="surf-label"><textPath href="#sp${si}" startOffset="50%" text-anchor="middle">${s.n.toUpperCase()}</textPath></text>`;
 
   s.T.forEach(t => {
     const tp = t[3].length * step, t0 = cur;
@@ -79,11 +79,11 @@ S.forEach((s, si) => {
 
     t[3].slice().sort((a, b) => a - b).forEach(y => {
       rings  += arc(rY0, rY1, cur, cur + step, s.c[2], `data-t="${ti}" data-s="${si}" data-y="${y}"${gsAttr}`);
-      labels += radial((rY0+rY1)/2, cur+step/2, y, 11.5, s.yc, 500, rY1-rY0-16, `data-t="${ti}" data-s="${si}"`, 'rgba(251,250,247,.92)');
+      labels += radial((rY0+rY1)/2, cur+step/2, y, 11.5, s.yc, 500, rY1-rY0-16, `data-t="${ti}" data-s="${si}"${gsAttr}`, 'rgba(251,250,247,.92)');
       cur += step;
     });
 
-    labels += radial((rT0+rT1)/2, t0+tp/2, t[0], 11.5, s.tc, 500, rT1-rT0-12, `data-t="${ti}" data-s="${si}"`, 'rgba(20,14,10,.45)');
+    labels += radial((rT0+rT1)/2, t0+tp/2, t[0], 11.5, s.tc, 500, rT1-rT0-12, `data-t="${ti}" data-s="${si}"${gsAttr}`, 'rgba(20,14,10,.45)');
     ti++;
   });
 });

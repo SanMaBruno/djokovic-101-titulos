@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Preview](assets/preview.png)
+![Visualización radial de los 101 títulos de Djokovic](assets/preview.png)
 
 [![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-GitHub_Pages-0969da?style=for-the-badge)](https://SanMabruno.github.io/djokovic-101-titulos/)
 [![Fuente](https://img.shields.io/badge/Fuente-ATP_Tour-1a73e8?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0xIDE1aC0ydi02aDJ2NnptMC04aC0yVjdoMnYyeiIvPjwvc3ZnPg==)](https://www.atptour.com/en/players/novak-djokovic/d643/titles-and-finals)
